@@ -108,13 +108,13 @@ def did_this_attack_succeed(attackFilename, defenseFilename):
 
     shutil.copy(path_DefenseFolder  + '/' + defenseFilename, path_TempFolder + '/' + defenseFilename)
     shutil.copy(path_AttackFolder + '/' + attackFilename, path_TempFolder + '/' + attackFilename)
-
+    shutil.copy('../wrapper.r2py', path_TempFolder + '/wrapper.r2py')
     start = time.time()
-
+    
     pobj = subprocess.Popen(
         ['python', '../repy.py', '--stop=Repy_stop_this', '../restrictions.default', '../encasementlib.r2py', defenseFilename,
          attackFilename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
+    
     # NOT A BUG: Note that this will not get all of the stdout or stderr because we are polling for completion.
     # Substantial output may cause the program to block, which is a very bad thing... in most cases.
     # Since output / errput is failure and timeout is failure, we're actually okay with it here.
@@ -131,7 +131,7 @@ def did_this_attack_succeed(attackFilename, defenseFilename):
             break
     else:
         (stdout, stderr) = pobj.communicate()
-
+    
 
     os.chdir(path_AttackFolder)  # go back to attack folder
     shutil.rmtree(path_TempFolder)  #remove the temp directory
