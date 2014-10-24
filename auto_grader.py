@@ -1,6 +1,6 @@
 """
 <Program Name>
-  auto_grader.r2py
+  auto_grader.py
 
 <Purpose>
   Module which takes all defense programs and attack programs in Repy V2 and creates 
